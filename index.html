@@ -108,13 +108,6 @@
   body[data-st="lesson4"]{ --a1:var(--st4-a1); --a2:var(--st4-a2); }
   body[data-st="lesson5"]{ --a1:var(--st5-a1); --a2:var(--st5-a2); }
   body[data-st="lesson6"]{ --a1:var(--st6-a1); --a2:var(--st6-a2); }
-  body.lightland{
-    --ink:#202D2D; --dim:#5B5670;
-    --panel:rgba(37,15,107,.05); --line:rgba(37,15,107,.18);
-    --a1:#451DC7; --a2:#250F6B;
-    --st1-a1:#7C5FD6; --st2-a1:#8B78DD; --st3-a1:#6E6E6E;
-    --st4-a1:#0E9C55; --st5-a1:#0BB565; --st6-a1:#04A94F;
-  }
   /*ROOT-END*/
 
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
@@ -433,12 +426,13 @@
     flex-direction:column; align-items:center; justify-content:center; cursor:pointer;}
   #codeovTxt{font-size:clamp(5rem,24vw,15rem); font-weight:900; letter-spacing:.28em;}
   #codeovHint{color:var(--dim); margin-top:10px;}
-  #howov{position:fixed; inset:0; z-index:66; background:rgba(2,4,10,.96); overflow:auto; padding:26px;}
-  #howov .card{max-width:640px; margin:0 auto; background:var(--panel); border:1px solid var(--line);
-    border-radius:16px; padding:22px;}
-  #howov h3{margin-bottom:10px;}
-  #howov p{color:var(--dim); line-height:1.55; margin:8px 0; font-size:.95rem;}
-  #howov b{color:var(--ink);}
+  .ht{max-width:920px; margin:0 auto; text-align:left; width:100%; padding-bottom:30px;}
+  .ht h2{color:var(--a1); font-size:1.12rem; margin:24px 0 8px; letter-spacing:.04em;}
+  .ht p,.ht li{color:var(--ink); opacity:.92; line-height:1.6; font-size:.97rem; margin:7px 0;}
+  .ht ul{padding-left:22px;}
+  .ht .kb{display:inline-block; border:1px solid var(--line); background:rgba(255,255,255,.06);
+    border-radius:6px; padding:1px 8px; font-weight:800;}
+  .ht .lbl{color:var(--a2); font-weight:800;}
   #muteBtn,#homeBtn{background:none; border:1px solid var(--line); border-radius:8px;
     padding:3px 9px; color:var(--dim); font-size:.85rem; cursor:pointer;}
   .prmsg{margin-top:12px; font-weight:800; min-height:1.4em; text-align:center;}
@@ -539,32 +533,6 @@
     .emg{grid-template-columns:repeat(6,1fr);}
     .stgrid{grid-template-columns:1fr 1fr;}
   }
-  /* Positive Waves: light landing, scoped to body.lightland only */
-  body.lightland{background:var(--w-light);}
-  body.lightland #bgc{display:none;}
-  body.lightland #s-landing{position:relative; z-index:1;}
-  body.lightland::before, body.lightland::after, body.lightland #s-landing::before{
-    content:''; position:fixed; left:-25vw; width:150vw; pointer-events:none; z-index:0;
-    border-radius:48% 52% 0 0 / 100% 100% 0 0;}
-  body.lightland::before{bottom:-14vh; height:42vh;
-    background:color-mix(in srgb,var(--w-primary) 8%,transparent);
-    animation:wavedrift 26s ease-in-out infinite alternate;}
-  body.lightland::after{bottom:-18vh; height:34vh;
-    background:color-mix(in srgb,var(--w-accent) 12%,transparent);
-    animation:wavedrift 34s ease-in-out infinite alternate-reverse;}
-  body.lightland #s-landing::before{bottom:-10vh; height:52vh; z-index:-1;
-    background:color-mix(in srgb,var(--w-deep) 6%,transparent);
-    animation:wavedrift 44s ease-in-out infinite alternate;}
-  @keyframes wavedrift{from{transform:translateX(-4vw);} to{transform:translateX(4vw);}}
-  body.lightland .logo{background:linear-gradient(100deg,var(--w-deep) 0%,var(--w-primary) 45%,var(--w-tint-v) 70%,var(--w-deep) 100%);
-    -webkit-background-clip:text; background-clip:text;}
-  body.lightland .sub{color:var(--w-primary);}
-  body.lightland .creditbar span{color:var(--w-deep); text-shadow:none;}
-  body.lightland .tickline{color:var(--w-primary); text-shadow:none;}
-  body.lightland .btn{background:linear-gradient(180deg,color-mix(in srgb,var(--a1) 12%,transparent),rgba(255,255,255,.55));
-    box-shadow:0 4px 16px color-mix(in srgb,var(--a1) 16%,transparent);}
-  body.lightland .landrail{background:repeating-linear-gradient(90deg, color-mix(in srgb,var(--w-deep) 14%,transparent) 0 14px, transparent 14px 26px);}
-  body.lightland .plat i{background:color-mix(in srgb,var(--w-deep) 8%,transparent);}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important; transition:none !important;}
     .creditbar span{padding-left:0; white-space:normal; display:block; text-align:center; font-size:.95rem;}
@@ -575,7 +543,7 @@
   [hidden]{display:none !important;}
 </style>
 </head>
-<body data-st="hub" class="lightland">
+<body data-st="hub">
 <canvas id="bgc"></canvas>
 <div id="setupBanner"></div>
 
@@ -597,8 +565,61 @@
       <button class="btn ghost" id="btnPoker">🃏 Estimating Poker</button>
     </div>
     <div class="tickline mono" id="insTick"></div>
-    <button class="btn ghost" id="btnHow" style="margin-top:12px; padding:8px 18px; font-size:.85rem;">❓ How to play</button>
+    <button class="btn ghost" id="btnHow" style="margin-top:12px; padding:8px 18px; font-size:.85rem;">📖 How to play</button>
     <div class="creditbar" aria-label="Built by BARY with Love for the Wavestone Leading SAFe Training in August 2026"><span>Built by BARY with Love for the Wavestone Leading SAFe Training in August 2026 🚂</span></div>
+  </div></section>
+
+  <section id="s-howto" class="screen"><div class="wrap" style="justify-content:flex-start; overflow:auto;">
+    <div class="ht">
+      <button class="btn ghost" id="btnHowBack" style="padding:8px 18px; font-size:.9rem;">← Back to the station</button>
+      <h1 class="glow" style="font-size:clamp(1.5rem,4vw,2.3rem); margin-top:14px;">📖 How to play</h1>
+
+      <h2>Quick start: players</h2>
+      <ul>
+        <li>Scan the QR on the shared screen, or open the app, tap <span class="lbl">🎫 Board a Game</span>, and enter the 4-letter code. You can hop on even after the train has left.</li>
+        <li>Type a name (max 16 characters), pick a travel badge, and wait in the lobby.</li>
+        <li>After the 3-2-1 countdown, tap your answer. Fast and correct wins.</li>
+      </ul>
+
+      <h2>Quick start: host</h2>
+      <ul>
+        <li>Tap <span class="lbl">🚂 Drive the Train</span> on the home screen.</li>
+        <li>Pick the journey length (5, 10, or 15 stops) and one of the six lesson stations.</li>
+        <li>Share the lobby screen: players scan the QR or use the code. Tap the code to enlarge it.</li>
+        <li>Tap <span class="lbl">Start the train 🚂</span> when everyone is aboard.</li>
+      </ul>
+
+      <h2>Scoring and streaks</h2>
+      <p>A correct answer scores between 500 points (at the buzzer) and 1000 points (instant), so speed matters. Every consecutive correct answer beyond the first adds +100, up to +500. A wrong or missed answer scores 0 and resets the streak. On the final stop everything pays <b>double</b>, so nobody is safe until the terminus.</p>
+
+      <h2>The game, stop by stop</h2>
+      <p>Each stop runs the same loop: countdown, question, answers roll in (the counter shows how many tickets are punched), then the host taps <span class="lbl">Reveal now</span> or lets the timer run out. The reveal shows the correct answer, the answer split, the fastest correct passenger, and the Conductor's commentary. Then the leaderboard, then <span class="lbl">Next stop 🚉</span>. After the last stop the button says <span class="lbl">Celebrate 🎉</span>: the podium builds 3rd, 2nd, 1st with drumroll and confetti, <span class="lbl">End celebration 🛎️</span> shows the full manifest plus the class report, and <span class="lbl">📋 Copy results</span> puts the ranking on the clipboard.</p>
+
+      <h2>Playing against bots</h2>
+      <p>In the lobby the host can summon a bot squad from the keyboard: <span class="kb">B</span> = 5 bots, <span class="kb">X</span> = 10, <span class="kb">Q</span> = 15, <span class="kb">T</span> = 20. Press a smaller key to shrink the squad. Bots answer every question with random speed and random correctness, so they are perfect for testing the app at full class size, for demo runs, or for playing solo against the machine. Add bots, start the train, and race them.</p>
+
+      <h2>Practice solo</h2>
+      <p>Tap <span class="lbl">🎯 Practice solo</span> on the home screen, pick a station, and play through questions at your own pace with no Firebase, no timer pressure, and instant explanations of the right answer. Good for warming up before the real ride.</p>
+
+      <h2>Estimating Poker</h2>
+      <p>Tap <span class="lbl">🃏 Estimating Poker</span> on the home screen. Two modes, both multiplayer with the same QR/code joining as the quiz:</p>
+      <ul>
+        <li><b>The Animal Warm-up:</b> the workbook exercise. Find the smallest animal, then estimate every other one in chickens. Everyone submits privately, the reveal compares the room against reality, and a best-estimator podium crowns the winner.</li>
+        <li><b>Story Rounds:</b> classic planning poker with the 1-2-3-5-8-13-20-? deck on ready-made story scenarios or your own item. Private cards, reveal, spread discussion, re-vote until the table converges.</li>
+      </ul>
+
+      <h2>Reconnecting and late join</h2>
+      <p>Anyone can join mid-game with the code and is dealt in from the next question. If a phone reloads or drops, it resumes the same session with the score intact. If the host reloads, the game continues where it was.</p>
+
+      <h2>If something goes wrong</h2>
+      <ul>
+        <li><b>Permission denied (E02/E04):</b> the database rules are not published for this app's branch. Fix in the Firebase console (see the README), reload, done.</li>
+        <li><b>QR missing (E17):</b> the tappable join link below it always works.</li>
+        <li><b>Anything else:</b> tap the version tag in the bottom right corner. It opens the debug panel with the live game state and error log, and <b>Copy log</b> puts everything on the clipboard for diagnosis.</li>
+      </ul>
+
+      <p style="margin-top:22px; opacity:.7;">Built by BARY with Love for the Wavestone Leading SAFe Training in August 2026 🚂</p>
+    </div>
   </div></section>
 
   <section id="s-station" class="screen"><div class="wrap">
@@ -847,17 +868,6 @@
   <div id="codeovTxt" class="glow mono"></div>
   <div id="codeovHint">Tap anywhere to close</div>
 </div>
-<div id="howov" hidden>
-  <div class="card">
-    <h3>🎫 How to play</h3>
-    <p><b>Joining:</b> scan the QR on the big screen or open the site, tap Board a Game, and enter the 4-letter code. Phones, tablets, and laptops all work. You can hop on even after the train has left.</p>
-    <p><b>Answering:</b> after the 3-2-1 countdown, tap your answer. Faster is better: a correct answer scores between 500 points (at the buzzer) and 1000 points (instant).</p>
-    <p><b>Streaks:</b> every consecutive correct answer beyond the first adds a +100 bonus, up to +500. A wrong or missed answer resets it.</p>
-    <p><b>The final stop:</b> all points pay DOUBLE on the last question. Comebacks happen.</p>
-    <p><b>The finale:</b> podium, medals, fireworks, and the full passenger manifest. May the best passenger win.</p>
-    <div class="btnrow"><button class="btn" id="howClose">Got it 🚂</button></div>
-  </div>
-</div>
 <div id="fpConf"></div>
 <canvas id="confc"></canvas>
 <div id="toast" role="alert"></div>
@@ -866,7 +876,7 @@
   <span class="dot" id="conn"></span><span id="connt">connecting…</span>
   <span id="sbcode" class="mono"></span>
   <button id="muteBtn">🔊</button>
-  <button id="vtag" class="mono">TPRW v0.2 (2026-08-15)</button>
+  <button id="vtag" class="mono">TPRW v3.0 (2026-08-15)</button>
 </div>
 <div id="debug" hidden>
   <h3>🔧 Debug panel</h3>
@@ -901,7 +911,7 @@ const firebaseConfig = {
 };
 /* ===================================================================== */
 
-const APP_VERSION='v0.2 (2026-08-15)';
+const APP_VERSION='v3.0 (2026-08-15)';
 const ROOT='lst_games';
 const PICK_N=10, TOP_N=10, COUNTDOWN_MS=3000, CALL_TIMEOUT=9000;
 
@@ -1294,14 +1304,12 @@ function go(id){
   document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   const t=document.getElementById(id); if(t)t.classList.add('on');
   S.screen=id;
-  const light=(id==='s-landing');
-  document.body.classList.toggle('lightland',light);
-  AMB_TRACK=light?'pads':'rail';
-  if(AMB.rg&&AC)AMB.rg.gain.setTargetAtTime(light?0.0001:0.07,AC.currentTime,0.5);
+  AMB_TRACK=(id==='s-landing'||id==='s-howto')?'pads':'rail';
+  if(AMB.rg&&AC)AMB.rg.gain.setTargetAtTime(AMB_TRACK==='pads'?0.0001:0.07,AC.currentTime,0.5);
   if(id==='s-landing'){startRail(); startLanding();}
-  else if(id==='s-station'||id==='s-pkmenu'){startRail();}
+  else if(id==='s-station'||id==='s-pkmenu'||id==='s-howto'){startRail();}
   else if(id==='s-join'||id==='s-pr'){stopRail();}
-  if(id==='s-landing'||id==='s-station'||id==='s-pkmenu'||(id==='s-lobby'&&S.role==='host'))maybeAmbient();
+  if(id==='s-landing'||id==='s-station'||id==='s-pkmenu'||id==='s-howto'||(id==='s-lobby'&&S.role==='host'))maybeAmbient();
   else stopAmbient();
   clearInterval(annT);
   if(id==='s-wait')startAnnounce();
@@ -2237,59 +2245,55 @@ function stopRail(){
 function startRail(){
   if(railOn)return; railOn=true;
   const cv=$('#bgc'), ctx=cv.getContext('2d');
-  function fit(){cv.width=innerWidth; cv.height=innerHeight;}
+  const LANES=7;
+  let ps=[];
+  function spawn(anywhere){
+    const lane=Math.floor(Math.random()*LANES);
+    return{
+      lane,
+      y:(lane+0.5)/LANES+(Math.random()*0.06-0.03),
+      x:anywhere?Math.random():-0.08,
+      sp:0.35+(lane/(LANES-1))*1.05+Math.random()*0.25,
+      len:0.012+Math.random()*0.05,
+      w:0.8+(lane/(LANES-1))*1.9,
+      al:0.16+(lane/(LANES-1))*0.5,
+      c:Math.random()
+    };
+  }
+  function seed(){
+    const n=Math.max(60,Math.min(150,Math.round(innerWidth*innerHeight/13000)));
+    ps=Array.from({length:n},()=>spawn(true));
+  }
+  function fit(){cv.width=innerWidth; cv.height=innerHeight; seed();}
   if(!railFit){railFit=true; addEventListener('resize',fit);}
   fit();
-  let off=0, streakAt=performance.now()+4500;
-  const stars=[];
-  for(let i=0;i<42;i++)stars.push({x:Math.random(),y:Math.random()*0.30,tw:Math.random()*6.28,sp:0.4+Math.random()});
+  let last=performance.now();
   function frame(){
     if(!railOn)return;
-    const nw=performance.now();
-    const a=getComputedStyle(document.body).getPropertyValue('--a1').trim()||'white';
-    const okc=cssVar('--ok')||'white', offc=cssVar('--dim')||'white';
+    const nw=performance.now(); const dt=Math.min(50,nw-last); last=nw;
+    const a1=getComputedStyle(document.body).getPropertyValue('--a1').trim()||'white';
+    const a2=getComputedStyle(document.body).getPropertyValue('--a2').trim()||'white';
+    const okc=cssVar('--ok')||'white';
     ctx.clearRect(0,0,cv.width,cv.height);
-    const cx=cv.width/2, hz=cv.height*0.34;
-    ctx.fillStyle=a;
-    stars.forEach(st2=>{
-      ctx.globalAlpha=0.22+0.3*Math.abs(Math.sin(st2.tw+nw*0.0006*st2.sp));
-      ctx.fillRect(st2.x*cv.width,st2.y*cv.height,2,2);
-    });
-    ctx.strokeStyle=a; ctx.globalAlpha=0.16;
-    for(let i=-9;i<=9;i++){
-      ctx.beginPath(); ctx.moveTo(cx+i*26,hz);
-      ctx.lineTo(cx+i*cv.width*0.11,cv.height); ctx.stroke();
-    }
-    ctx.globalAlpha=0.2;
-    for(let k=0;k<16;k++){
-      const z=((k/16)+off)%1;
-      const y=hz+Math.pow(z,2.2)*(cv.height-hz);
-      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cv.width,y); ctx.stroke();
-    }
-    for(let i=0;i<5;i++){
-      const lx=cv.width*(0.12+i*0.19);
-      const on2=Math.sin(nw*0.0012+i*1.7)>0;
-      ctx.globalAlpha=0.85; ctx.fillStyle=on2?okc:offc;
-      ctx.beginPath(); ctx.arc(lx,hz-10,3,0,6.283); ctx.fill();
-      ctx.globalAlpha=0.22; ctx.beginPath(); ctx.arc(lx,hz-10,7,0,6.283); ctx.fill();
-    }
-    if(!RM&&nw>streakAt){
-      const p=(nw-streakAt)/650;
-      if(p>=1){streakAt=nw+7000+Math.random()*6000;}
-      else{
-        const sx=p*1.3*cv.width-0.15*cv.width;
-        ctx.globalAlpha=0.8; ctx.lineWidth=2; ctx.strokeStyle='white';
-        ctx.beginPath(); ctx.moveTo(sx-140,hz-4); ctx.lineTo(sx+40,hz-4); ctx.stroke();
-        ctx.lineWidth=1;
-      }
+    ctx.globalAlpha=0.05; ctx.strokeStyle=a1; ctx.lineWidth=1;
+    for(let l=0;l<LANES;l++){const y=((l+0.5)/LANES)*cv.height; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cv.width,y); ctx.stroke();}
+    for(let i=0;i<ps.length;i++){
+      const p=ps[i];
+      p.x+=p.sp*dt*0.000075;
+      if(p.x-p.len>1.04){ps[i]=spawn(false); continue;}
+      const y=p.y*cv.height, x=p.x*cv.width, len=Math.max(6,p.len*cv.width);
+      ctx.globalAlpha=p.al;
+      ctx.strokeStyle=p.c<0.10?okc:(p.c<0.62?a1:a2);
+      ctx.lineWidth=p.w;
+      ctx.beginPath(); ctx.moveTo(x-len,y); ctx.lineTo(x,y); ctx.stroke();
     }
     ctx.globalAlpha=1;
-    if(!RM){off=(off+0.0022)%1; railRaf=requestAnimationFrame(frame);}
+    if(!RM)railRaf=requestAnimationFrame(frame);
   }
   frame();
 }
 
-/* ---------------- landing: circling train through the 5 platforms ---------------- */
+/* ---------------- landing: circling train through the six platforms ---------------- */
 function cssVar(n){try{return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}catch(e){return '';}}
 const LAND_FRAC=Object.keys(LESSONS).map((k,i,a)=>Math.round(7+i*(86/Math.max(1,a.length-1))));
 const WAGONS=['SERVICE READY','ALL ABOARD','MIND THE GAP','REMOTE · AUGUST 2026'];
@@ -2950,8 +2954,8 @@ function wire(){
     $('#stTitle').textContent='Choose your line'; startRail(); go('s-station');});
   $('#btnPractice').addEventListener('click',()=>{ensureAudio(); S.practice=true;
     $('#stTitle').textContent='Practice run: choose your line'; go('s-station');});
-  $('#btnHow').addEventListener('click',()=>{$('#howov').hidden=false;});
-  $('#howClose').addEventListener('click',()=>{$('#howov').hidden=true;});
+  $('#btnHow').addEventListener('click',()=>{go('s-howto');});
+  $('#btnHowBack').addEventListener('click',()=>{go('s-landing');});
   $('#codebig').addEventListener('click',()=>{if(!S.code)return;
     $('#codeovTxt').textContent=S.code; $('#codeov').hidden=false;});
   $('#codeov').addEventListener('click',()=>{$('#codeov').hidden=true;});
