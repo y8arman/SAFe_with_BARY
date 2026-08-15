@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>SAFe TRACKS: Leading SAFe Trivia</title>
+<title>The Positive RailWay: Leading SAFe Edition</title>
 <!--
-  SAFe TRACKS: Leading SAFe Trivia
+  The Positive RailWay: Leading SAFe Edition
   Built by BARY with Love for the Wavestone Leading SAFe Training in August 2026
   Single-file real-time multiplayer quiz. Host on a shared screen, players join by QR.
-  Successor to SAFe & SOUND v2.01 (POPM). Same architecture, six stations, Wavestone CI.
+  Successor to SAFe & SOUND v2.01 (POPM). Formerly SAFe TRACKS v0.1.
+  Same architecture, six stations, Wavestone CI.
 
   ================= SETUP (do these once) =================
   1) FIREBASE CONFIG: the block marked "FIREBASE CONFIG" below reuses the
@@ -98,7 +99,7 @@
     --panel:rgba(255,255,255,.055); --line:rgba(255,255,255,.13);
     --ok:var(--w-accent); --bad:#CFCBE0;
     --gold:var(--w-tint-g); --silver:#D0D0D0; --bronze:var(--w-tint-v);
-    --o0:var(--w-primary); --o1:var(--w-deep); --o2:#7456D5; --o3:var(--w-grey);
+    --o0:#38BDF8; --o1:#FBBF24; --o2:#F472B6; --o3:#34D399; /* classic quartet (v2.01) */
     --sb:34px;
   }
   body[data-st="lesson1"]{ --a1:var(--st1-a1); --a2:var(--st1-a2); }
@@ -107,6 +108,13 @@
   body[data-st="lesson4"]{ --a1:var(--st4-a1); --a2:var(--st4-a2); }
   body[data-st="lesson5"]{ --a1:var(--st5-a1); --a2:var(--st5-a2); }
   body[data-st="lesson6"]{ --a1:var(--st6-a1); --a2:var(--st6-a2); }
+  body.lightland{
+    --ink:#202D2D; --dim:#5B5670;
+    --panel:rgba(37,15,107,.05); --line:rgba(37,15,107,.18);
+    --a1:#451DC7; --a2:#250F6B;
+    --st1-a1:#7C5FD6; --st2-a1:#8B78DD; --st3-a1:#6E6E6E;
+    --st4-a1:#0E9C55; --st5-a1:#0BB565; --st6-a1:#04A94F;
+  }
   /*ROOT-END*/
 
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
@@ -131,6 +139,8 @@
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
   .glow{color:var(--a1); text-shadow:0 0 14px color-mix(in srgb,var(--a1) 65%,transparent),0 0 40px color-mix(in srgb,var(--a1) 30%,transparent);}
   h1.logo{font-weight:900; letter-spacing:.06em; font-size:clamp(2.2rem,7.2vw,4.6rem); text-align:center;}
+  .tagline{letter-spacing:.14em; font-weight:600; color:var(--dim); text-align:center;
+    font-size:clamp(.62rem,1.6vw,.88rem); margin-top:6px; text-transform:uppercase;}
   .sub{letter-spacing:.42em; font-weight:700; color:var(--dim); font-size:clamp(.7rem,1.8vw,1rem);
     text-transform:uppercase; margin-top:6px; text-align:center;}
   .board{margin-top:14px; font-size:clamp(.72rem,1.7vw,.95rem); color:var(--gold);
@@ -263,10 +273,10 @@
   .bar .fl{height:100%; width:0; border-radius:8px; transition:width .8s cubic-bezier(.2,.8,.3,1);}
   .bar.i0 .sh{background:var(--o0);} .bar.i1 .sh{background:var(--o1);}
   .bar.i2 .sh{background:var(--o2);} .bar.i3 .sh{background:var(--o3);}
-  .bar.i0 .fl{background:color-mix(in srgb,var(--o0) 60%,var(--w-light));}
-  .bar.i1 .fl{background:color-mix(in srgb,var(--o1) 60%,var(--w-light));}
-  .bar.i2 .fl{background:color-mix(in srgb,var(--o2) 60%,var(--w-light));}
-  .bar.i3 .fl{background:color-mix(in srgb,var(--o3) 60%,var(--w-light));}
+  .bar.i0 .fl{background:var(--o0);}
+  .bar.i1 .fl{background:var(--o1);}
+  .bar.i2 .fl{background:var(--o2);}
+  .bar.i3 .fl{background:var(--o3);}
   .bar .ct{text-align:right; font-weight:800;}
   .verdict{text-align:center; margin-top:clamp(8px,4vh,30px);}
   .verdict .vem{font-size:clamp(3rem,12vh,5.5rem); display:block;}
@@ -529,6 +539,32 @@
     .emg{grid-template-columns:repeat(6,1fr);}
     .stgrid{grid-template-columns:1fr 1fr;}
   }
+  /* Positive Waves: light landing, scoped to body.lightland only */
+  body.lightland{background:var(--w-light);}
+  body.lightland #bgc{display:none;}
+  body.lightland #s-landing{position:relative; z-index:1;}
+  body.lightland::before, body.lightland::after, body.lightland #s-landing::before{
+    content:''; position:fixed; left:-25vw; width:150vw; pointer-events:none; z-index:0;
+    border-radius:48% 52% 0 0 / 100% 100% 0 0;}
+  body.lightland::before{bottom:-14vh; height:42vh;
+    background:color-mix(in srgb,var(--w-primary) 8%,transparent);
+    animation:wavedrift 26s ease-in-out infinite alternate;}
+  body.lightland::after{bottom:-18vh; height:34vh;
+    background:color-mix(in srgb,var(--w-accent) 12%,transparent);
+    animation:wavedrift 34s ease-in-out infinite alternate-reverse;}
+  body.lightland #s-landing::before{bottom:-10vh; height:52vh; z-index:-1;
+    background:color-mix(in srgb,var(--w-deep) 6%,transparent);
+    animation:wavedrift 44s ease-in-out infinite alternate;}
+  @keyframes wavedrift{from{transform:translateX(-4vw);} to{transform:translateX(4vw);}}
+  body.lightland .logo{background:linear-gradient(100deg,var(--w-deep) 0%,var(--w-primary) 45%,var(--w-tint-v) 70%,var(--w-deep) 100%);
+    -webkit-background-clip:text; background-clip:text;}
+  body.lightland .sub{color:var(--w-primary);}
+  body.lightland .creditbar span{color:var(--w-deep); text-shadow:none;}
+  body.lightland .tickline{color:var(--w-primary); text-shadow:none;}
+  body.lightland .btn{background:linear-gradient(180deg,color-mix(in srgb,var(--a1) 12%,transparent),rgba(255,255,255,.55));
+    box-shadow:0 4px 16px color-mix(in srgb,var(--a1) 16%,transparent);}
+  body.lightland .landrail{background:repeating-linear-gradient(90deg, color-mix(in srgb,var(--w-deep) 14%,transparent) 0 14px, transparent 14px 26px);}
+  body.lightland .plat i{background:color-mix(in srgb,var(--w-deep) 8%,transparent);}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important; transition:none !important;}
     .creditbar span{padding-left:0; white-space:normal; display:block; text-align:center; font-size:.95rem;}
@@ -539,15 +575,16 @@
   [hidden]{display:none !important;}
 </style>
 </head>
-<body data-st="hub">
+<body data-st="hub" class="lightland">
 <canvas id="bgc"></canvas>
 <div id="setupBanner"></div>
 
 <div id="app">
 
   <section id="s-landing" class="screen on"><div class="wrap" style="justify-content:center;">
-    <h1 class="logo" style="margin-top:6px;">SAFe TRACKS</h1>
-    <div class="sub fx">Leading SAFe Trivia</div>
+    <h1 class="logo" style="margin-top:6px;">The Positive RailWay</h1>
+    <div class="sub fx">Leading SAFe Edition</div>
+    <div class="tagline">Six stops through AI-Empowered Leading SAFe</div>
     <div class="landline">
       <div class="landrail"></div>
       <div id="landPlats"></div>
@@ -829,7 +866,7 @@
   <span class="dot" id="conn"></span><span id="connt">connecting…</span>
   <span id="sbcode" class="mono"></span>
   <button id="muteBtn">🔊</button>
-  <button id="vtag" class="mono">SAFeTRACKS v0.1 (2026-08-14)</button>
+  <button id="vtag" class="mono">TPRW v0.2 (2026-08-15)</button>
 </div>
 <div id="debug" hidden>
   <h3>🔧 Debug panel</h3>
@@ -864,7 +901,7 @@ const firebaseConfig = {
 };
 /* ===================================================================== */
 
-const APP_VERSION='v0.1 (2026-08-14)';
+const APP_VERSION='v0.2 (2026-08-15)';
 const ROOT='lst_games';
 const PICK_N=10, TOP_N=10, COUNTDOWN_MS=3000, CALL_TIMEOUT=9000;
 
@@ -1011,12 +1048,12 @@ function logErr(ctx,e){
   const gx=(typeof S!=='undefined'&&S.game)?(' ('+(S.game.phase||'-')+':'+(S.game.qIndex==null?'-':S.game.qIndex)+')'):'';
   ERR.push(new Date().toISOString().slice(11,19)+' ['+ctx+'] '+m+gx);
   if(ERR.length>60)ERR.shift();
-  try{console.error('[TRACKS]',ctx,e);}catch(x){}
+  try{console.error('[TPRW]',ctx,e);}catch(x){}
   updateVtag(); renderDebug();
 }
 function updateVtag(){
   const v=document.getElementById('vtag'); if(!v)return;
-  v.textContent='SAFeTRACKS '+APP_VERSION+(ERR.length?(' · ⚠'+ERR.length):'');
+  v.textContent='TPRW '+APP_VERSION+(ERR.length?(' · ⚠'+ERR.length):'');
   v.classList.toggle('err',ERR.length>0);
 }
 function stWarn(e){if(S.stWarn)return; S.stWarn=true;
@@ -1060,7 +1097,7 @@ function validatePools(){
       else if(!(x.time>=10&&x.time<=60)){logErr('E18 pools',k+'#'+i+' bad time'); bad++;}
     });
   }
-  if(bad===0)console.info('[TRACKS] Question pools OK: '+n+' questions across '+Object.keys(LESSONS).length+' lessons.');
+  if(bad===0)console.info('[TPRW] Question pools OK: '+n+' questions across '+Object.keys(LESSONS).length+' lessons.');
   else toast('⚠ E18 question pool validation failed ('+bad+' issue(s)). Tap the version tag.');
 }
 
@@ -1139,6 +1176,14 @@ const AMB_PROG=[
   [196.00,246.94,293.66,98.00]
 ];
 const AMB_ARP=[[1,4,6],[2,5,7],[1,3,6],[2,4,7]];
+let AMB_TRACK='pads';
+const PAD_BAR=4.0;
+const PAD_PROG=[
+  [146.83,185.00,220.00,277.18],
+  [196.00,246.94,293.66,369.99],
+  [123.47,185.00,220.00,293.66],
+  [110.00,220.00,277.18,329.63]
+];
 function ambBar(t0,bi){
   const rel=Math.max(0,t0-AC.currentTime);
   const ch=AMB_PROG[bi%4], e=AMB_BAR/8, beat=AMB_BAR/4, B=AMB.bus;
@@ -1147,6 +1192,17 @@ function ambBar(t0,bi){
   [1,3].forEach(b=>nz(0.05,0.04,rel+b*beat,2400,B));
   for(let h=0;h<8;h++){if(h%2===0||Math.random()<0.5)nz(0.03,0.018,rel+h*e,5500,B);}
   AMB_ARP[bi%4].forEach((ix,k)=>tone(ch[(k+1)%3]*2,0.16,'triangle',0.05,rel+ix*e,0,B));
+}
+function padBar(t0,bi){
+  const rel=Math.max(0,t0-AC.currentTime);
+  const ch=PAD_PROG[bi%4], B=AMB.bus;
+  ch.forEach((f,i)=>{
+    tone(f,3.9,'sine',0.034,rel+i*0.06,0,B);
+    tone(f*2,3.6,'triangle',0.011,rel+0.3+i*0.05,0,B);
+  });
+  [0,2].forEach(b=>tone(ch[0]/2,0.5,'sine',0.05,rel+b,0,B));
+  if(Math.random()<0.5)nz(0.5,0.006,rel+1+Math.random()*2,4200,B);
+  if(Math.random()<0.3)tone(ch[2]*4,0.9,'sine',0.012,rel+2+Math.random(),0,B);
 }
 function startAmbient(){
   try{
@@ -1164,20 +1220,20 @@ function startAmbient(){
     for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
     const src=AC.createBufferSource(); src.buffer=b; src.loop=true;
     const f=AC.createBiquadFilter(); f.type='lowpass'; f.frequency.value=90;
-    const g=AC.createGain(); g.gain.value=0.07;
+    const g=AC.createGain(); g.gain.value=(AMB_TRACK==='pads'?0.0001:0.07); AMB.rg=g;
     src.connect(f); f.connect(g); g.connect(AMB.bus); src.start();
     AMB.src=src;
     AMB.next=AC.currentTime+0.15; AMB.bar=0;
     AMB.t1=setInterval(()=>{
       if(!AMB.on||!AC)return;
       while(AMB.next<AC.currentTime+0.55){
-        ambBar(AMB.next,AMB.bar);
+        (AMB_TRACK==='pads'?padBar:ambBar)(AMB.next,AMB.bar);
         AMB.bar=(AMB.bar+1)%4;
-        AMB.next+=AMB_BAR;
+        AMB.next+=(AMB_TRACK==='pads'?PAD_BAR:AMB_BAR);
       }
     },200);
     AMB.t2=setInterval(()=>{
-      if(!AMB.on||Math.random()>=0.55)return;
+      if(!AMB.on||AMB_TRACK==='pads'||Math.random()>=0.55)return;
       tone(294,1.05,'triangle',0.05,0,0,AMB.bus); tone(392,1.05,'triangle',0.045,0,0,AMB.bus);
       tone(294,0.5,'triangle',0.035,1.25,0,AMB.bus); tone(392,0.5,'triangle',0.03,1.25,0,AMB.bus);
     },14000);
@@ -1238,6 +1294,10 @@ function go(id){
   document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
   const t=document.getElementById(id); if(t)t.classList.add('on');
   S.screen=id;
+  const light=(id==='s-landing');
+  document.body.classList.toggle('lightland',light);
+  AMB_TRACK=light?'pads':'rail';
+  if(AMB.rg&&AC)AMB.rg.gain.setTargetAtTime(light?0.0001:0.07,AC.currentTime,0.5);
   if(id==='s-landing'){startRail(); startLanding();}
   else if(id==='s-station'||id==='s-pkmenu'){startRail();}
   else if(id==='s-join'||id==='s-pr'){stopRail();}
@@ -2295,7 +2355,7 @@ function renderDebug(){
   const g=S.game||{};
   const age=S.lastSnapAt?Math.round((Date.now()-S.lastSnapAt)/1000):-1;
   $('#dbmeta').textContent=[
-    'app      SAFeTRACKS '+APP_VERSION,
+    'app      TPRW '+APP_VERSION,
     'creator  Yusuf Barman (BarY) · github.com/y8arman',
     'role     '+(S.role||'-'),
     'code     '+(S.code||'-'),
@@ -2909,7 +2969,7 @@ function wire(){
   $('#btnCopyRes').addEventListener('click',()=>{
     const g=S.game; if(!g)return;
     const deckN=(g.deck&&g.deck.length)||0;
-    const lines=['SAFe TRACKS results · '+((LESSONS[g.lesson]&&LESSONS[g.lesson].name)||g.lesson)+' · '+deckN+' stops'];
+    const lines=['The Positive RailWay results · '+((LESSONS[g.lesson]&&LESSONS[g.lesson].name)||g.lesson)+' · '+deckN+' stops'];
     playersArr(g).forEach((p,ix)=>{
       const st=p.stats||{};
       if(g.mode==='poker')lines.push('#'+(ix+1)+'  '+(p.name||'Passenger')+'  '+(p.score||0)+' pts');
